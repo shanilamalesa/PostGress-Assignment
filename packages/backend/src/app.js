@@ -4,8 +4,12 @@ const app = express();
 
 app.use(express.json());
 
+const authRouter = require("./routes/auth");
+app.use("/auth", authRouter);
+
 const leadsRouter = require("./routes/leads");
-app.use("/api/leads", leadsRouter);
+const requireAuth = require("./middleware/requireAuth");
+app.use("/api/leads", requireAuth, leadsRouter);
 
 app.use((err, req, res, next) => {
   console.error(err);

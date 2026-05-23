@@ -1,9 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const { listLeads, getLead, changeStatus, getStats } = require("../services/leadsService");
+const requireRole = require('../middleware/requireRole');
 
 // GET /api/leads
-router.get("/", async (req, res, next) => {
+router.get("/", requireRole('admin'), async (req, res, next) => {
+  
   try {
     const { q, status, limit, offset } = req.query;
     const leads = await listLeads({ q, status, limit, offset });
@@ -42,5 +44,7 @@ router.patch("/:id", async (req, res, next) => {
     next(err);
   }
 });
+
+
 
 module.exports = router;
