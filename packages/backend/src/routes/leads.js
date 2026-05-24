@@ -4,11 +4,11 @@ const { listLeads, getLead, changeStatus, getStats } = require("../services/lead
 const requireRole = require('../middleware/requireRole');
 
 // GET /api/leads
-router.get("/", requireRole('admin'), async (req, res, next) => {
+router.get("/",  async (req, res, next) => {
   
   try {
     const { q, status, limit, offset } = req.query;
-    const leads = await listLeads({ q, status, limit, offset });
+    const leads = await listLeads({ q, status, limit, offset }, req.user);
     res.json({ leads });
   } catch (err) {
     next(err);

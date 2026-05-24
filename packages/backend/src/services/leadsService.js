@@ -9,8 +9,8 @@ const VALID_TRANSITIONS = {
   lost: [],
 };
 
-async function listLeads({ q, status, limit = 20, offset = 0 }) {
-  return leadsRepo.list({ q, status, limit, offset });
+async function listLeads({ q, status, limit = 20, offset = 0 }, user) {
+  return leadsRepo.list({ q, status, limit, offset }, user);
 }
 
 async function getLead(id) {

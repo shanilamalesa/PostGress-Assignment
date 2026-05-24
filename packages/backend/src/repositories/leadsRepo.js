@@ -1,7 +1,7 @@
 require("dotenv").config();
 const pool = require("../../db/pool");
 
-async function list({ limit = 20, offset = 0, q, status }) {
+async function list({ limit = 20, offset = 0, q, status }, user) {
   const params = [];
   const conditions = [];
 
@@ -13,6 +13,10 @@ async function list({ limit = 20, offset = 0, q, status }) {
     params.push(status);
     conditions.push(`status = $${params.length}`);
   }
+  if (user.role !== "admin") {
+    params.push(user.id);
+    conditions.push(`assigned_to = $${params.length}`);
+}
 
   const where = conditions.length ? `WHERE ${conditions.join(" AND ")}` : "";
   params.push(limit, offset);
