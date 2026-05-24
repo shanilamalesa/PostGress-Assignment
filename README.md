@@ -46,3 +46,43 @@ Then commit it
 git add README.md
 git commit -m "docs: add README with setup instructions"
 git push
+
+## Authentication
+
+JWT-based authentication with bcrypt password hashing.
+
+| Method | Route | Description | Auth |
+|--------|-------|-------------|------|
+| POST | /auth/signup | Register a new user | No |
+| POST | /auth/login | Login and get tokens | No |
+| POST | /auth/refresh | Get new access token | No |
+| GET | /auth/me | Get current user | Yes |
+
+## Roles
+
+| Role | Permissions |
+|------|-------------|
+| admin | See all leads |
+| manager | See all leads |
+| agent | See only assigned leads |
+
+## Features
+
+- JWT authentication with refresh tokens
+- bcrypt password hashing
+- Role-based access control
+- Row-scoped lead access
+- Rate limiting on login
+- React frontend with protected routes
+- Integration tests
+
+## Frontend Setup
+
+```bash
+cd packages/client
+npm install
+npm start
+```
+
+
+
