@@ -35,6 +35,16 @@ CREATE TABLE users (
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
+CREATE TABLE ussd_transcripts (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  session_id TEXT NOT NULL,
+  phone TEXT,
+  state TEXT,
+  input TEXT,
+  response TEXT,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()\
+);
+
 ALTER TABLE leads ADD COLUMN source TEXT NOT NULL DEFAULT 'manual'
   CHECK (source IN ('whatsapp', 'ussd', 'manual'));
 
