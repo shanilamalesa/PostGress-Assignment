@@ -219,3 +219,27 @@ td {
 .badge-qualified { background: #faeeda; color: #854F0B; }
 .badge-converted { background: #e1f5ee; color: #0F6E56; }
 .badge-lost { background: #fcebeb; color: #A32D2D; }
+
+.badge-whatsapp {
+  background-color: #25D366;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+}
+
+.badge-ussd {
+  background-color: #3B82F6;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+}
+
+.badge-manual {
+  background-color: #6B7280;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+}

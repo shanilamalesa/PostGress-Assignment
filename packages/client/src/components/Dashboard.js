@@ -10,22 +10,31 @@ export default function Dashboard() {
 
   useEffect(() => {
     fetch("/api/leads", {
-      headers: { Authorization: `Bearer ${token}` }
+      headers: { Authorization: `Bearer ${token}` },
     })
-      .then(res => res.json())
-      .then(data => setLeads(data.leads || []));
+      .then((res) => res.json())
+      .then((data) => setLeads(data.leads || []));
 
     fetch("/api/leads/stats", {
-      headers: { Authorization: `Bearer ${token}` }
+      headers: { Authorization: `Bearer ${token}` },
     })
-      .then(res => res.json())
-      .then(data => setStats(data));
+      .then((res) => res.json())
+      .then((data) => setStats(data));
   }, []);
 
   const initials = user?.email?.slice(0, 2).toUpperCase();
 
   function getBadgeClass(status) {
     return `badge badge-${status}`;
+  }
+
+  function getSourceBadge(source) {
+    const colors = {
+      whatsapp: "badge-whatsapp",
+      ussd: "badge-ussd",
+      manual: "badge-manual",
+    };
+    return `badge ${colors[source] || "badge-manual"}`;
   }
 
   return (
@@ -41,7 +50,9 @@ export default function Dashboard() {
             <span className="nav-email">{user?.email}</span>
           </div>
           <span className="nav-role">{user?.role}</span>
-          <button className="nav-logout" onClick={logout}>Sign out</button>
+          <button className="nav-logout" onClick={logout}>
+            Sign out
+          </button>
         </div>
       </nav>
 
@@ -55,14 +66,18 @@ export default function Dashboard() {
             <div className="stat-val">{stats?.total || 0}</div>
             <div className="stat-sub">All time</div>
           </div>
-          {["new", "contacted", "converted"].map(s => (
+          {["new", "contacted", "converted"].map((s) => (
             <div key={s} className="stat-card">
               <div className="stat-label">{s}</div>
               <div className="stat-val">
-                {stats?.byStatus?.find(r => r.status === s)?.total || 0}
+                {stats?.byStatus?.find((r) => r.status === s)?.total || 0}
               </div>
               <div className="stat-sub">
-                {s === "new" ? "Awaiting contact" : s === "contacted" ? "In progress" : "Closed deals"}
+                {s === "new"
+                  ? "Awaiting contact"
+                  : s === "contacted"
+                    ? "In progress"
+                    : "Closed deals"}
               </div>
             </div>
           ))}
@@ -71,7 +86,9 @@ export default function Dashboard() {
         <div className="table-card">
           <div className="table-header">
             <span className="table-title">Recent leads</span>
-            <Link to="/admin-demo" className="demo-btn">Admin demo view →</Link>
+            <Link to="/admin-demo" className="demo-btn">
+              Admin demo view →
+            </Link>
           </div>
           <table>
             <thead>
@@ -80,15 +97,25 @@ export default function Dashboard() {
                 <th>Email</th>
                 <th>Status</th>
                 <th>Created</th>
+                <th>Source</th>
               </tr>
             </thead>
             <tbody>
-              {leads.map(lead => (
+              {leads.map((lead) => (
                 <tr key={lead.id}>
                   <td>{lead.name}</td>
                   <td>{lead.email}</td>
-                  <td><span className={getBadgeClass(lead.status)}>{lead.status}</span></td>
+                  <td>
+                    <span className={getBadgeClass(lead.status)}>
+                      {lead.status}
+                    </span>
+                  </td>
                   <td>{new Date(lead.created_at).toLocaleDateString()}</td>
+                  <td>
+                    <span className={getSourceBadge(lead.source)}>
+                      {lead.source}
+                    </span>
+                  </td>
                 </tr>
               ))}
             </tbody>

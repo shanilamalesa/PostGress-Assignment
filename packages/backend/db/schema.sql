@@ -35,6 +35,9 @@ CREATE TABLE users (
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
+ALTER TABLE leads ADD COLUMN source TEXT NOT NULL DEFAULT 'manual'
+  CHECK (source IN ('whatsapp', 'ussd', 'manual'));
+
 ALTER TABLE leads ADD COLUMN assigned_to UUID REFERENCES users(id);
 
 CREATE INDEX idx_leads_status ON leads(status);
